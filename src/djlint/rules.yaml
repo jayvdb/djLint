@@ -228,3 +228,10 @@
     flags: re.DOTALL|re.I
     patterns:
     - <html[^>]*?>(?:(?!<meta[^>]*?name=([\"|'])keywords\b).)*</html>
+- rule:
+    name: H032
+    message: <!DOCTYPE ... > should be <!DOCTYPE html>
+    flags: re.DOTALL|re.I
+    patterns:
+    - <!doctype\s+(?! )(?!html)
+    - <!doctype\s+html.+>
