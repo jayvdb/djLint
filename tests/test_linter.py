@@ -361,6 +361,16 @@ def test_H023(runner: CliRunner, tmp_file: TextIO) -> None:
     assert result.exit_code == 1
     assert "H023 1:" in result.output
 
+    write_to_file(tmp_file.name, b'&#32;')
+    result = runner.invoke(djlint, [tmp_file.name])
+    assert result.exit_code == 1
+    assert "H023 1:" in result.output
+
+    write_to_file(tmp_file.name, b'<a href=" &#32; "></a>')
+    result = runner.invoke(djlint, [tmp_file.name])
+    assert result.exit_code == 1
+    assert "H023 1:" in result.output
+
 
 def test_H024(runner: CliRunner, tmp_file: TextIO) -> None:
     write_to_file(tmp_file.name, b'<script type="hare">')
